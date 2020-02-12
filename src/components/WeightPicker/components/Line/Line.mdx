@@ -1,0 +1,23 @@
+---
+name: Width
+menu: Components
+---
+
+import {Playground, Props} from 'docz'
+import Line from './Line'
+
+# Line
+
+  Simple Component that renders a line with a custom height
+  and a mark whe is active
+## Properties
+
+<Props of={Width}/>
+
+## Basic usage
+
+<Playground>
+  <Width weight={3}/>
+  <Width weight={5} isActive={false}/>
+  <Width weight={13} isActive={true}/>
+</Playground>
