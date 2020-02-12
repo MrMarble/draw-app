@@ -60,7 +60,6 @@
     }
   },
   "lint-staged": {
-    "*.test.js": "test:coverage",
     "*.js": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
   }
