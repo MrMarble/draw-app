@@ -31,16 +31,18 @@ describe('ColorPicker Component', () => {
   describe('Paragraph element', () => {
     test('Is shown', () => {
       const colorList = ['#fff'];
-      const { container } = render(<ColorPicker colorList={colorList} />);
+      const { getByTestId } = render(<ColorPicker colorList={colorList} />);
 
-      expect(container.firstChild.firstChild.nodeName).toBe('P');
+      expect(getByTestId('color-paragraph')).not.toBeNull();
     });
 
     test('Not shown when color list is empty', () => {
       const emptyColorList = [];
-      const { container } = render(<ColorPicker colorList={emptyColorList} />);
+      const { queryByTestId } = render(
+        <ColorPicker colorList={emptyColorList} />,
+      );
 
-      expect(container.firstChild.firstChild.nodeName).toBe('DIV');
+      expect(queryByTestId('color-paragraph')).toBeNull();
     });
   });
 

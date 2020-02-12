@@ -3,27 +3,28 @@ import { render, fireEvent } from '@testing-library/react';
 import 'jest-styled-components';
 import Color from './Color';
 
-const TEST_ID = 'color-circle';
-
 describe('Color Component', () => {
   test('Component is rendered', () => {
-    const { container } = render(<Color />);
+    const { queryByTestId } = render(<Color />);
 
-    expect(container.firstChild.nodeName).toBe('SPAN');
+    expect(queryByTestId('color-circle')).not.toBeNull();
   });
 
   test('Background color is applied', () => {
     const bgColor = 'red';
     const { getByTestId } = render(<Color bgColor={bgColor} />);
 
-    expect(getByTestId(TEST_ID)).toHaveStyleRule('background-color', bgColor);
+    expect(getByTestId('color-circle')).toHaveStyleRule(
+      'background-color',
+      bgColor,
+    );
   });
 
   test('Check mark is shown when isActive', () => {
     const isActive = true;
-    const { getByTestId } = render(<Color isActive={isActive} />);
+    const { queryByTestId } = render(<Color isActive={isActive} />);
 
-    expect(getByTestId(TEST_ID)).toHaveStyleRule({ pseudo: 'before' });
+    expect(queryByTestId('color-selected')).not.toBeNull();
   });
 
   test('onActive is called', () => {
@@ -33,7 +34,7 @@ describe('Color Component', () => {
       <Color bgColor={bgColor} onActive={onActive} />,
     );
 
-    fireEvent.click(getByTestId(TEST_ID));
+    fireEvent.click(getByTestId('color-circle'));
 
     expect(onActive).toHaveBeenCalledTimes(1);
     expect(onActive).toHaveBeenCalledWith(bgColor);

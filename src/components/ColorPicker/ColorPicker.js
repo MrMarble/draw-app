@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import t from 'prop-types';
-import styled from 'styled-components';
-import Color from './components/Color';
-
-const Label = styled.p`
-  font-weight: bold;
-`;
+import { Color } from './components/Color';
 
 const ColorPicker = ({ colorList, onActiveCallback }) => {
   const [active, setActive] = useState();
@@ -19,7 +14,9 @@ const ColorPicker = ({ colorList, onActiveCallback }) => {
 
   return (
     <div>
-      {colorSet.length > 0 && <Label>Select a color:</Label>}
+      {colorSet && colorSet.length && (
+        <p data-testid="color-paragraph">Select a color:</p>
+      )}
       <div data-testid="color-list">
         {colorSet.map((color) => (
           <Color
@@ -37,12 +34,11 @@ const ColorPicker = ({ colorList, onActiveCallback }) => {
 ColorPicker.propTypes = {
   /** Available color list */
   colorList: t.arrayOf(t.string).isRequired,
-  /** onClick callback */
   onActiveCallback: t.func,
 };
 
 ColorPicker.defaultProps = {
-  onActiveCallback: Function.prototype,
+  onActiveCallback: (color) => console.log(color),
 };
 
 export default ColorPicker;

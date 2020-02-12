@@ -11,37 +11,34 @@ const Circle = style.span`
     border-radius: 1em;
 
     ${(props) => props.bgColor && `background-color: ${props.bgColor}`};
+`;
 
-    ${(props) => props.isActive
-      && `&:before {
-      content: " ";
-      position: absolute;
-      width: 1.3em;
-      height: 1.3em;
-      border-radius:1em;
-      margin: 50% 0 0 50%;
-      transform: translate3d(-50%, -50%, 0);
-      background-color: rgba(0, 0, 0, .3);
-    }
+const CheckMark = style.span`
+  color: white;
+  position: absolute;
+  margin: 50% 0 0 50%;
+  transform: translate3d(-50%, -50%, 0);
 
-    &:after {
-      content: "\\2714";
-      color: white;
-      position: absolute;
-      margin: 50% 0 0 50%;
-      transform: translate3d(-50%, -50%, 0);
-    }`}
-
-
-  `;
+  &:before {
+    content: " ";
+    position: absolute;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius:1em;
+    margin: 50% 0 0 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: rgba(0, 0, 0, .3);
+  }
+`;
 
 const Color = ({ bgColor, isActive, onActive }) => (
   <Circle
     data-testid="color-circle"
     onClick={() => onActive(bgColor)}
     bgColor={bgColor}
-    isActive={isActive}
-  />
+  >
+    {isActive && <CheckMark data-testid="color-selected">&#10004;</CheckMark>}
+  </Circle>
 );
 
 Color.propTypes = {
