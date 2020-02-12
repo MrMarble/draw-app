@@ -1,0 +1,24 @@
+---
+name: Color
+menu: Components
+---
+
+import {Playground, Props} from 'docz'
+import Color from './Color'
+
+# Color
+
+  Simple component that renders a circle with a custom background color
+  and a check mark when active
+
+## Properties
+
+<Props of={Color}/>
+
+## Basic usage
+
+<Playground>
+  <Color/>
+  <Color bgColor={'#00f'} isActive={true}/>
+  <Color bgColor={'#0a0'} isActive={false}/>
+</Playground>

@@ -1,0 +1,41 @@
+---
+name: ColorPicker
+menu: Components
+---
+
+import {Playground, Props} from 'docz'
+import ColorPicker from './ColorPicker'
+
+# ColorPicker
+
+  Component that renders a list of <Color /> components
+
+## Properties
+
+<Props of={ColorPicker}/>
+
+## Basic usage
+
+  Paragraph element will only be shown when the list of colors is not empty.
+
+<Playground>
+  <ColorPicker colorList={[]}/>
+
+  <ColorPicker colorList={['#fa3c2d', '#ed065e', '#9b06aa', '#6729b6', '#3c4ab8', '#45b052']}/>
+</Playground>
+
+## State
+
+<Playground>
+ {() => {
+    const [selectedColor, setSelectedColor] = React.useState('--');
+    const callback = (color) => setSelectedColor(color);
+    const colorList = ['#fa3c2d', '#ed065e', '#9b06aa'];
+    return (
+      <React.Fragment>
+        <p>Selected color: {selectedColor}</p>
+        <ColorPicker colorList={colorList} onActiveCallback={callback}/>
+      </React.Fragment>
+      )
+  }}
+</Playground>
