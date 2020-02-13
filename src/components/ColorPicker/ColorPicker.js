@@ -38,7 +38,7 @@ ColorPicker.propTypes = {
 };
 
 ColorPicker.defaultProps = {
-  onActiveCallback: (color) => console.log(color),
+  onActiveCallback: Function.prototype,
 };
 
 export default ColorPicker;
