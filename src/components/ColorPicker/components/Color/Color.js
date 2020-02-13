@@ -18,17 +18,12 @@ const CheckMark = style.span`
   position: absolute;
   margin: 50% 0 0 50%;
   transform: translate3d(-50%, -50%, 0);
-
-  &:before {
-    content: " ";
-    position: absolute;
-    width: 1.3em;
-    height: 1.3em;
-    border-radius:1em;
-    margin: 50% 0 0 50%;
-    transform: translate3d(-50%, -50%, 0);
-    background-color: rgba(0, 0, 0, .3);
-  }
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 1em;
+  margin: 50% 0 0 50%;
+  background-color: rgba(0, 0, 0, .3);
+  text-align: center;
 `;
 
 const Color = ({ bgColor, isActive, onActive }) => (
