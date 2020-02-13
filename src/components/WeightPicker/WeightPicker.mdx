@@ -1,0 +1,41 @@
+---
+name: WeightPicker
+menu: Components
+---
+
+import {Playground, Props} from 'docz'
+import WeightPicker from './WeightPicker'
+
+# WeightPicker
+
+## Properties
+
+<Props of={WeightPicker}/>
+
+## Basic usage
+
+It will not render if the weightList param is empty or undefined
+
+<Playground>
+  <WeightPicker/>
+
+  <WeightPicker weightList={[]}/>
+
+  <WeightPicker weightList={[1, 3, 5, 8, 12]}/>
+</Playground>
+
+## State
+
+<Playground>
+ {() => {
+    const [selectedWeight, setSelectedWeight] = React.useState();
+    const callback = (color) => setSelectedWeight(color);
+    const weightList = [1, 3, 5, 8, 12];
+    return (
+      <React.Fragment>
+        <p>Selected weight: {selectedWeight}</p>
+        <WeightPicker weightList={weightList} onActiveCallback={callback}/>
+      </React.Fragment>
+      )
+  }}
+</Playground>
