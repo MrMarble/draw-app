@@ -14,8 +14,10 @@ const ColorPicker = ({ colorList, onActiveCallback }) => {
 
   return (
     <div>
-      {colorSet && colorSet.length && (
-        <p data-testid="color-paragraph">Select a color:</p>
+      {colorSet.length > 0 && (
+        <p data-testid="color-paragraph">
+          <strong>Select a color:</strong>
+        </p>
       )}
       <div data-testid="color-list">
         {colorSet.map((color) => (
