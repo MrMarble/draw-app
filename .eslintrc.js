@@ -34,5 +34,6 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'import/prefer-default-export': 0,
     'import/named': 0,
+    'arrow-parens': 0,
   },
 };
