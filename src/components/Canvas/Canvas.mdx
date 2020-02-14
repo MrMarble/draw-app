@@ -1,0 +1,80 @@
+---
+name: Canvas
+menu: Components
+---
+
+import {Playground, Props} from 'docz';
+import CanvasContainer from './CanvasContainer'
+
+# Canvas
+
+## Properties
+
+<Props of={CanvasContainer} />
+
+## Basic usage
+  Just as a drawing board
+<Playground>
+  <CanvasContainer width={300} height={300} lineWeight={3} color={'#0f0'}/>
+</Playground>
+
+### Initial drawing
+
+  You can use `currentDrawing` to instanciate the canvas with a drawing on it
+
+<Playground>
+  {() => {
+    const lineWeight = 5;
+    const color = '#ffdd34'
+    const path = [{
+      x:50,
+      y: 50,
+      color,
+      lineWeight
+    },
+    {
+      x:150,
+      y: 100,
+      color,
+      lineWeight
+    },
+    {
+      x:250,
+      y: 50,
+      color,
+      lineWeight
+    }
+    ]
+    return <CanvasContainer width={300} height={150} lineWeight={lineWeight} color={color} currentDrawing={path}/>
+  }}
+</Playground>
+
+## State
+
+<Playground>
+  {() => {
+    const [color, setColor] = React.useState('#f00');
+    const [weight, setWeight] = React.useState(3);
+    const onChangeColor = (event) => {setColor(event.target.value)}
+    const onChangeWeight = (event) => {setWeight(event.target.value)}
+    return (
+      <React.Fragment>
+        <div>
+          Weight:
+          <select onChange={onChangeWeight} value={weight}>
+            <option value='3'>3</option>
+            <option value='5'>5</option>
+            <option value='15'>15</option>
+          </select>
+          Color:
+          <select onChange={onChangeColor} value={color}>
+            <option value='#f00'>Red</option>
+            <option value='#0f0'>Green</option>
+            <option value='#00f'>Blue</option>
+          </select>
+        </div>
+        <CanvasContainer width={300} height={300} lineWeight={weight} color={color}/>
+      </React.Fragment>
+    );
+  }}
+</Playground>
