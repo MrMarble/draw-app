@@ -1,0 +1,46 @@
+---
+name: UndoRedo
+menu: Components
+---
+
+# UndoRedo
+
+import {Playground, Props} from 'docz'
+import UndoRedo from './UndoRedo'
+
+## Props
+
+<Props of={UndoRedo} />
+
+## Basic usage
+
+<Playground>
+  <UndoRedo disableUndo={true} disableRedo={false}/>
+</Playground>
+
+## State
+
+<Playground>
+  {() => {
+    const [lastClicked, setLastClicked] = React.useState();
+    const [isUndoDisabled, setUndoDisabled] = React.useState(false);
+    const [isRedoDisabled, setRedoDisabled] = React.useState(false);
+    const undoCallback = () => {
+      setUndoDisabled(true);
+      setRedoDisabled(false);
+      setLastClicked('Undo')
+    };
+    const redoCallback = () => {
+      setRedoDisabled(true);
+      setUndoDisabled(false);
+      setLastClicked('Redo')
+      };
+    return (
+      <React.Fragment>
+        <p>Last clicked: {lastClicked}</p>
+        <UndoRedo undoCallback={undoCallback} redoCallback={redoCallback} disableRedo={isRedoDisabled} disableUndo={isUndoDisabled}/>
+      </React.Fragment>
+    )
+  }}
+
+</Playground>
