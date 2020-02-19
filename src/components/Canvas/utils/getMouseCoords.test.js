@@ -18,4 +18,28 @@ describe('getMouseCoords()', () => {
     expect(mouseCoords.x).toEqual(5);
     expect(mouseCoords.y).toEqual(5);
   });
+  test('Touch event Should return {x: 5, y: 5}', () => {
+    const canvas = document.createElement('canvas');
+    const event = {
+      touches: [
+        {
+          clientX: 10,
+          clientY: 10,
+        },
+      ],
+    };
+
+    const mouseCoords = getMouseCoords(canvas, event);
+
+    expect(mouseCoords.x).toEqual(5);
+    expect(mouseCoords.y).toEqual(5);
+  });
+  test('TouchEnd should return undefined', () => {
+    const canvas = document.createElement('canvas');
+    const event = {};
+
+    const mouseCoords = getMouseCoords(canvas, event);
+
+    expect(mouseCoords).toBeUndefined();
+  });
 });
