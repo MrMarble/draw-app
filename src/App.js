@@ -114,7 +114,13 @@ function App() {
   return (
     <ThemeProvider theme={Theme}>
       <Container>
-        <Main onMouseDown={onMouseDown} onMouseUp={onMouseUp} ref={canvasRef}>
+        <Main
+          onMouseDown={onMouseDown}
+          onTouchStart={onMouseDown}
+          onTouchEnd={onMouseUp}
+          onMouseUp={onMouseUp}
+          ref={canvasRef}
+        >
           <Canvas
             width={canvasWidth}
             height={canvasHeight}
