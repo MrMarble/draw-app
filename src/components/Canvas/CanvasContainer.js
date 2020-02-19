@@ -15,25 +15,12 @@ const CanvasContainer = ({
 
   const ctx = useRef();
   const canvas = useRef();
-  const drawing = useRef(currentDrawing);
+  const drawing = useRef([]);
 
   useEffect(() => {
     ctx.current = canvas.current.getContext('2d');
     ctx.current.lineCap = 'round';
     ctx.current.lineJoin = 'round';
-
-    if (drawing.current.length > 0) {
-      for (let index = 1; index < drawing.current.length; index += index) {
-        const lineStart = drawing.current[index - 1];
-        const lineEnd = drawing.current[index];
-        ctx.current.beginPath();
-        ctx.current.moveTo(lineStart.x, lineStart.y);
-        ctx.current.lineWidth = lineEnd.lineWeight;
-        ctx.current.strokeStyle = lineEnd.color;
-        ctx.current.lineTo(lineEnd.x, lineEnd.y);
-        ctx.current.stroke();
-      }
-    }
     ctx.current.strokeStyle = color;
     ctx.current.lineWidth = lineWeight;
   }, []);
@@ -47,6 +34,29 @@ const CanvasContainer = ({
   }, [color]);
 
   useEffect(() => {
+    ctx.current.clearRect(0, 0, width, height);
+    for (let index = 0; index < currentDrawing.length; index += 1) {
+      const line = currentDrawing[index];
+      let begin = false;
+      if (ctx.current.lineWidth !== line.lineWeight) {
+        ctx.current.lineWidth = line.lineWeight;
+        begin = true;
+      }
+      if (ctx.current.strokeStyle.toUpperCase() !== line.color.toUpperCase()) {
+        ctx.current.strokeStyle = line.color;
+        begin = true;
+      }
+      if (line.mode === 'begin' || begin) {
+        ctx.current.beginPath();
+        ctx.current.moveTo(line.x, line.y);
+      }
+      ctx.current.lineTo(line.x, line.y);
+      if (line.mode === 'end' || index === currentDrawing.length - 1) {
+        ctx.current.stroke();
+      }
+    }
+    ctx.current.strokeStyle = color;
+    ctx.current.lineWidth = lineWeight;
     drawing.current = currentDrawing;
   }, [currentDrawing]);
 
@@ -55,21 +65,64 @@ const CanvasContainer = ({
     ctx.current.moveTo(cursorPosition.x, cursorPosition.y);
     ctx.current.beginPath();
     setIsMouseDown(true);
+    drawing.current = [
+      ...drawing.current,
+      {
+        x: cursorPosition.x,
+        y: cursorPosition.y,
+        lineWeight,
+        color,
+        mode: 'begin',
+      },
+    ];
   };
-  const onMouseUp = () => setIsMouseDown(false);
+  const onMouseUp = event => {
+    if (isMouseDown) {
+      const cursorPosition = getMouseCoords(canvas.current, event);
+      setIsMouseDown(false);
+      if (typeof cursorPosition === 'undefined') {
+        drawing.current = [
+          ...drawing.current,
+          {
+            x: drawing.current.slice(-1)[0].x,
+            y: drawing.current.slice(-1)[0].y,
+            lineWeight,
+            color,
+            mode: 'end',
+          },
+        ];
+      } else {
+        drawing.current = [
+          ...drawing.current,
+          {
+            x: cursorPosition.x,
+            y: cursorPosition.y,
+            lineWeight,
+            color,
+            mode: 'end',
+          },
+        ];
+      }
+
+      drawingUpdatedCallback(drawing.current);
+    }
+  };
 
   const onMouseMove = event => {
     if (isMouseDown) {
       const cursorPosition = getMouseCoords(canvas.current, event);
       ctx.current.lineTo(cursorPosition.x, cursorPosition.y);
       ctx.current.stroke();
-      drawing.current.push({
-        x: cursorPosition.x,
-        y: cursorPosition.y,
-        lineWeight,
-        color,
-      });
-      drawingUpdatedCallback(drawing.current);
+      drawing.current = [
+        ...drawing.current,
+        {
+          x: cursorPosition.x,
+          y: cursorPosition.y,
+          lineWeight,
+          color,
+          mode: 'draw',
+        },
+      ];
     }
   };
 
@@ -80,9 +133,12 @@ const CanvasContainer = ({
       width={width}
       height={height}
       onMouseDown={onMouseDown}
+      onTouchStart={onMouseDown}
       onMouseUp={onMouseUp}
+      onTouchEnd={onMouseUp}
       onMouseLeave={onMouseUp}
       onMouseMove={onMouseMove}
+      onTouchMove={onMouseMove}
     />
   );
 };

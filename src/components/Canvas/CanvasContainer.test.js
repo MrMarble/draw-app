@@ -7,16 +7,19 @@ describe('CanvasContainer Component', () => {
   let beginPath;
   let lineTo;
   let stroke;
+  let clearRect;
   beforeEach(() => {
     moveTo = jest.fn();
     beginPath = jest.fn();
     lineTo = jest.fn();
     stroke = jest.fn();
+    clearRect = jest.fn();
     HTMLCanvasElement.prototype.getContext = jest.fn(() => ({
       moveTo,
       beginPath,
       lineTo,
       stroke,
+      clearRect,
     }));
   });
 
@@ -30,6 +33,21 @@ describe('CanvasContainer Component', () => {
         y: 10,
         color,
         lineWeight,
+        mode: 'begin',
+      },
+      {
+        x: 15,
+        y: 15,
+        color,
+        lineWeight,
+        mode: 'draw',
+      },
+      {
+        x: 15,
+        y: 15,
+        color,
+        lineWeight,
+        mode: 'end',
       },
     ];
     const { getByTestId } = render(
@@ -47,10 +65,13 @@ describe('CanvasContainer Component', () => {
       clientY: 10,
     });
     fireEvent.mouseMove(getByTestId('canvas'), {
-      clientX: 10,
-      clientY: 10,
+      clientX: 15,
+      clientY: 15,
     });
-    fireEvent.mouseUp(getByTestId('canvas'));
+    fireEvent.mouseUp(getByTestId('canvas'), {
+      clientX: 15,
+      clientY: 15,
+    });
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(result);
@@ -65,18 +86,21 @@ describe('CanvasContainer Component', () => {
         y: 50,
         color,
         lineWeight,
+        mode: 'begin',
       },
       {
         x: 150,
         y: 100,
         color,
         lineWeight,
+        mode: 'draw',
       },
       {
         x: 250,
         y: 50,
         color,
         lineWeight,
+        mode: 'end',
       },
     ];
     render(

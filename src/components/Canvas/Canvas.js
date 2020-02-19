@@ -21,9 +21,12 @@ const CanvasComponent = ({
     width={width}
     height={height}
     onMouseDown={onMouseDown}
+    onTouchStart={onMouseDown}
     onMouseUp={onMouseUp}
+    onTouchEnd={onMouseUp}
     onMouseLeave={onMouseLeave}
     onMouseMove={onMouseMove}
+    onTouchMove={onMouseMove}
   />
 );
 
