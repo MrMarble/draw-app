@@ -1,0 +1,30 @@
+---
+name: Menu
+menu: Components
+---
+
+import { Playground, Props } from 'docz';
+import Menu from './Menu';
+import  Theme  from './../../Theme';
+import { ThemeProvider } from 'styled-components';
+
+
+# Menu
+
+## Properties
+
+<Props of={Menu} />
+
+## Basic usage
+
+<Playground>
+  <ThemeProvider theme={Theme}>
+  <Menu>
+    <ol>
+      <li>Item</li>
+      <li>Item</li>
+      <li>Item</li>
+    </ol>
+  </Menu>
+  </ThemeProvider>
+</Playground>
