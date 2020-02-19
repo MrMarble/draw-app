@@ -9,8 +9,8 @@ const Circle = style.span`
     position:relative;
     margin: 2px 3px;
     border-radius: 1em;
-
-    ${(props) => props.bgColor && `background-color: ${props.bgColor}`};
+    text-align: left;
+    ${props => props.bgColor && `background-color: ${props.bgColor}`};
 `;
 
 const CheckMark = style.span`
